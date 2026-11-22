@@ -14,6 +14,7 @@ app.use(cors({
 
 app.use(express.json());
 
+const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 
 app.get("/", (req, res) => {
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 
 module.exports = app;
