@@ -33,6 +33,11 @@ exports.createProduct = async (req, res) => {
       message: error.message
     });
   }
+
+// req.body contains the information sent by the frontend or Postman.
+// Product.create() saves a new product in MongoDB.
+// res.status(201) indicates successful creation.
+// try/catch handles errors.
 };
 
 // GET ALL PRODUCTS
@@ -70,6 +75,9 @@ exports.getProductById = async (req, res) => {
       message: "Invalid product ID"
     });
   }
+
+  // req.params.id retrieves the product ID from the URL.
+  // findById() searches for that product.
 };
 
 // UPDATE PRODUCT
@@ -93,7 +101,7 @@ exports.updateProduct = async (req, res) => {
       }
     }
 
-    const product = await Product.findByIdAndUpdate(
+    const product = await Product.findByIdAndUpdate(  //findByIdAndDelete() finds the product and removes it from MongoDB.
       req.params.id,
       updates,
       {
