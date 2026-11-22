@@ -71,3 +71,51 @@ exports.getProductById = async (req, res) => {
     });
   }
 };
+
+// UPDATE PRODUCT
+exports.updateProduct = async (req, res) => {
+  try {
+    const allowedFields = [
+      "name",
+      "description",
+      "price",
+      "image",
+      "category",
+      "stock",
+      "status"
+    ];
+
+    const updates = {};
+
+    for (const field of allowedFields) {
+      if (req.body[field] !== undefined) {
+        updates[field] = req.body[field];
+      }
+    }
+
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      updates,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found"
+      });
+    }
+
+    res.status(200).json({
+      message: "Product updated successfully",
+      product
+    });
+
+  } catch (error) {
+    res.status(400).json({
+      message: error.message
+    });
+  }
+};
