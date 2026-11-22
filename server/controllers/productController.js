@@ -13,7 +13,7 @@ exports.createProduct = async (req, res) => {
       status
     } = req.body;
 
-    const product = await product.create({
+    const product = await Product.create({
       name,
       description,
       price,
@@ -31,6 +31,23 @@ exports.createProduct = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: error.message
+    });
+  }
+};
+
+// GET ALL PRODUCTS
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+
+    res.status(200).json({
+      count: products.length,
+      products
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch products"
     });
   }
 };
