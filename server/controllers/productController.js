@@ -118,4 +118,32 @@ exports.updateProduct = async (req, res) => {
       message: error.message
     });
   }
+
+// new: true returns the updated product.
+// runValidators: true applies the schema's validation rules.
+// allowedFields prevents clients from changing fields outside our intended product fields.
+};
+
+// DELETE PRODUCT
+exports.deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(
+      req.params.id
+    );
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found"
+      });
+    }
+
+    res.status(200).json({
+      message: "Product deleted successfully"
+    });
+
+  } catch (error) {
+    res.status(400).json({
+      message: "Invalid product ID"
+    });
+  }
 };
