@@ -6,7 +6,6 @@ const helmet = require("helmet");
 
 const app = express();
 
-// Middleware
 app.use(helmet());
 
 app.use(cors({
@@ -15,11 +14,14 @@ app.use(cors({
 
 app.use(express.json());
 
-// Test route
+const productRoutes = require("./routes/productRoutes");
+
 app.get("/", (req, res) => {
   res.json({
     message: "E-commerce API is running successfully!"
   });
 });
+
+app.use("/api/products", productRoutes);
 
 module.exports = app;
